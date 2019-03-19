@@ -1,6 +1,7 @@
 defmodule SimpleServer.Router do
   use Plug.Router
   require Logger
+  alias SimpleServer.Repo
   # plug Plug.Session, store: :cookie,
   #   key: "_elx_simple_api_session",
   #   encryption_salt: "elxsimpleapienc",
@@ -17,12 +18,8 @@ defmodule SimpleServer.Router do
   plug(:dispatch)
 
   get "/permissions" do
-    data = :mongo 
-      |> Mongo.find("users-permissions_permission", %{}) 
-      |> Enum.to_list() 
-      |> Poison.encode!
-  
-    send_resp(conn, 200, data)
+    data = Repo.findPermissions |> Enum.to_list()  |> Poison.encode!
+    send_resp(conn ,200, data)
   end
 
   post "/upload" do

@@ -2,16 +2,10 @@ defmodule SimpleServer.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
-
   use Application
   alias Plug.Adapters.Cowboy
+  alias SimpleServer.DB
   require Logger
-
-  defimpl Poison.Encoder, for: BSON.ObjectId do
-    def encode(id, options) do
-      BSON.ObjectId.encode!(id) |> Poison.Encoder.encode(options)
-    end
-  end
 
   def start(_type, _args) do
     # List all child processes to be supervised
@@ -25,12 +19,7 @@ defmodule SimpleServer.Application do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: SimpleServer.Supervisor]
     Logger.info("Starting application...")
-    case Mongo.start_link(url: "mongodb://localhost:27017/my", name: :mongo) do
-      {:ok, _} -> Logger.info "Connected to mongo"
-      {:error, err} -> Logger.error err
-      _ -> Logger.info "Something went wrong"
-    end
-
+    DB.connect()
     Supervisor.start_link(children, opts)
   end
 end
