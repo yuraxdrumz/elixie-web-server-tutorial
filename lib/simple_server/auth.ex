@@ -2,8 +2,9 @@ defmodule SimpleServer.Authentication do
   import Plug.Conn
   use Joken.Config
   
-  def init(opts), do: opts
-
+  def init(opts) do
+    opts
+  end
 
   defp check_auth(conn, token) do 
     jwt = String.slice(token, 7, String.length(token))

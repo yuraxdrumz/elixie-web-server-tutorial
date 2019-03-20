@@ -1,6 +1,6 @@
 defmodule SimpleServer.Router do
   use Plug.Router
-  require Logger
+  use Plug.ErrorHandler
   alias SimpleServer.Repo
   alias SimpleServer.Authentication
   # plug Plug.Session, store: :cookie,
@@ -23,17 +23,20 @@ defmodule SimpleServer.Router do
     send_resp(conn ,200, data)
   end
 
-  post "/upload" do
+  post "/upload" do    
     stringified = Poison.encode!(conn.body_params)
+    
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, stringified)
   end
+
+
+  # def handle_errors(conn, %{kind: kind, reason: reason, stack: _stack}) do
+  #   send_resp(conn, conn.status, Poison.encode!(%{error: kind}))
+  # end
   
-  get _ do
-    send_resp(conn, 404, "not found")
-  end
-  post _ do
+  match _ do
     send_resp(conn, 404, "not found")
   end
 end
