@@ -5,6 +5,6 @@ defmodule SimpleServer.DB do
     end
   end
   def connect() do 
-    Mongo.start_link(url: "mongodb://localhost:27017/my", name: :mongo)
+    Mongo.start_link(url: Application.get_env(:simple_server, :uri), name: Application.get_env(:simple_server, :name))
   end
 end
