@@ -3,6 +3,7 @@ defmodule SimpleServer.Router do
   use Plug.ErrorHandler
   alias SimpleServer.Repo
   alias SimpleServer.Authentication
+  require Logger
   # plug Plug.Session, store: :cookie,
   #   key: "_elx_simple_api_session",
   #   encryption_salt: "elxsimpleapienc",
@@ -12,13 +13,13 @@ defmodule SimpleServer.Router do
   # plug Plug.CSRFProtection
   plug Authentication
   plug(:match)
-  plug(Plug.Logger, log: Application.get_env(:simple_server, :log_level))
+  # plug(Plug.Logger, log: Application.get_env(:simple_server, :log_level))
   plug(Plug.RequestId)
   plug(Plug.Parsers, parsers: [:urlencoded, :multipart, :json], json_decoder: Poison)
   plug(:dispatch)
 
   get "/user/:user_id" do
-    IO.inspect conn.assigns
+    Logger.info Poison.encode!(conn.assigns)
     data = Repo.findPermissions |> Enum.to_list()  |> Poison.encode!
     send_resp(conn ,200, data)
   end

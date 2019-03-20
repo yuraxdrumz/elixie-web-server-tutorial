@@ -17,6 +17,15 @@ config :simple_server,
 
 config :joken, default_signer: "56651dd8d2142f56a44a334f2180ec01d671d82f6b61e2b553d22381f6f017d9"
 
+
+config :logger,
+  backends: [{Loggix, :info_log}]
+config :logger, :info_log,
+  path: "./info_log",
+  level: :info,
+  encoder: {Poison, :encode!},
+  metadata: [:request_id],
+  rotate: %{max_bytes: 4096, keep: 10}
   # put the result of the mix command above here
 # You can configure your application as:
 #
