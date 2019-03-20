@@ -27,9 +27,6 @@ defmodule SimpleServer.MixProject do
       {:poison, "~> 3.1"},
       {:plug_cowboy, "~> 1.0"},
       {:mongodb, ">= 0.0.0"},
-      {:guardian, "~> 1.0"},
-      {:comeonin, "~> 4.0"},
-      {:bcrypt_elixir, "~> 0.12"},
       {:joken, "~> 2.0"},
       {:remix, "~> 0.0.1", only: :dev},
       {:loggix, "~> 0.0.9"}

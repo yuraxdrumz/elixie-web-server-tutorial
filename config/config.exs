@@ -25,7 +25,7 @@ config :logger, :info_log,
   level: :info,
   encoder: {Poison, :encode!},
   metadata: [:request_id],
-  rotate: %{max_bytes: 4096, keep: 10}
+  rotate: %{max_bytes: 1024 * 1024 * 100, keep: 10}
   # put the result of the mix command above here
 # You can configure your application as:
 #

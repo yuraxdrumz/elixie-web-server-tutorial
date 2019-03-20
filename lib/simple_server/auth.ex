@@ -22,7 +22,8 @@ defmodule SimpleServer.Authentication do
     |> halt
   end
 
-  def call(conn, _opts) do
+
+  def call(%Plug.Conn{request_path: _path} = conn,_opts) do
     case get_req_header(conn, "authorization") do
       [auth_str] -> check_auth(conn, auth_str)
       _ -> send_custom_resp(conn)
