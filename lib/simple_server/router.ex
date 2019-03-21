@@ -1,8 +1,8 @@
 defmodule SimpleServer.Router do
   use Plug.Router
   use Plug.ErrorHandler
-  alias SimpleServer.RegController
-  require Logger
+  import SimpleServer.RegController
+  import Logger
   # plug Plug.Session, store: :cookie,
   #   key: "_elx_simple_api_session",
   #   encryption_salt: "elxsimpleapienc",
@@ -16,9 +16,9 @@ defmodule SimpleServer.Router do
   plug(Plug.Parsers, parsers: [:urlencoded, :multipart, :json], json_decoder: Poison)
   plug(:dispatch)
   
-  get "/other", do: RegController.handle_other(conn)
+  get "/other", do: handle_other(conn)
 
-  post "/upload", do: RegController.handle_upload(conn)
+  post "/upload", do: handle_upload(conn)
   
   forward "/user", to: SimpleServer.AuthRouter
 
