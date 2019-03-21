@@ -8,7 +8,7 @@ defmodule SimpleServer.Authentication do
 
   defp check_auth(conn, token) do 
     jwt = String.slice(token, 7, String.length(token))
-    case SimpleServer.Authentication.verify_and_validate(jwt) do
+    case verify_and_validate(jwt) do
       {:ok, claims} -> %{conn | assigns: Map.merge(conn.assigns, claims)}
       {:error, err} -> send_custom_resp(conn, %{error: err})
       _ -> send_custom_resp(conn)
