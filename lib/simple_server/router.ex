@@ -2,7 +2,7 @@ defmodule SimpleServer.Router do
   use Plug.Router
   use Plug.ErrorHandler
   import SimpleServer.RegController
-  import Logger
+  alias SimpleServer.Validator
   # plug Plug.Session, store: :cookie,
   #   key: "_elx_simple_api_session",
   #   encryption_salt: "elxsimpleapienc",
@@ -10,13 +10,14 @@ defmodule SimpleServer.Router do
   #   log: :debug
   # plug :fetch_session
   # plug Plug.CSRFProtection
-
   plug(:match)
+  plug(:fetch_query_params)
   plug(Plug.RequestId)
   plug(Plug.Parsers, parsers: [:urlencoded, :multipart, :json], json_decoder: Poison)
+  plug(Validator, [%{route: "/other/:s", qs: %{test: Integer}}])
   plug(:dispatch)
   
-  get "/other", do: handle_other(conn)
+  get "/other/:s", do: handle_other(conn)
 
   post "/upload", do: handle_upload(conn)
   

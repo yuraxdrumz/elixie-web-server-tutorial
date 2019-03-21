@@ -1,7 +1,6 @@
 defmodule SimpleServer.AuthRouter do
   use Plug.Router
   use Plug.ErrorHandler
-  import Logger
   import SimpleServer.AuthController
   alias SimpleServer.Authentication
 
