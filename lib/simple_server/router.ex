@@ -1,6 +1,7 @@
 defmodule SimpleServer.Router do
   use Plug.Router
   use Plug.ErrorHandler
+  alias SimpleServer.RegController
   require Logger
   # plug Plug.Session, store: :cookie,
   #   key: "_elx_simple_api_session",
@@ -15,24 +16,15 @@ defmodule SimpleServer.Router do
   plug(Plug.Parsers, parsers: [:urlencoded, :multipart, :json], json_decoder: Poison)
   plug(:dispatch)
   
-  get "/other" do    
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(200, "ok")
-  end
+  get "/other", do: RegController.handle_other(conn)
 
-  post "/upload" do    
-    stringified = Poison.encode!(conn.body_params)
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(200, stringified)
-  end
+  post "/upload", do: RegController.handle_upload(conn)
   
   forward "/user", to: SimpleServer.AuthRouter
 
-  # def handle_errors(conn, %{kind: kind, reason: reason, stack: _stack}) do
-  #   send_resp(conn, conn.status, Poison.encode!(%{error: kind}))
-  # end
+  def handle_errors(conn, %{kind: kind, reason: reason, stack: _stack}) do
+    send_resp(conn, conn.status, Poison.encode!(%{kind: kind, reason: reason}))
+  end
   
   match _ do
     send_resp(conn, 404, "not found")

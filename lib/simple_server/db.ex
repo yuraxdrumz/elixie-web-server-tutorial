@@ -7,4 +7,7 @@ defmodule SimpleServer.DB do
   def connect() do 
     Mongo.start_link(url: Application.get_env(:simple_server, :uri), name: Application.get_env(:simple_server, :name))
   end
+  def find(coll_name, opts) do 
+    :mongo |> Mongo.find(coll_name, opts) 
+  end
 end

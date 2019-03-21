@@ -1,5 +1,6 @@
 defmodule SimpleServer.Repo do
+  require SimpleServer.DB
   def findPermissions do
-    :mongo |> Mongo.find("dynamiccaps", %{}) 
+    SimpleServer.DB.find("dynamiccaps", %{})
   end
 end
