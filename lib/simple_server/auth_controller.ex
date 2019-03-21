@@ -4,9 +4,9 @@ defmodule SimpleServer.AuthController do
   import Plug.Conn
 
   def handle_user_id(conn) do
-    data = findPermissions |> Enum.to_list()  |> Poison.encode!
-    Logger.info data
-    conn 
-    |> send_resp(200, data)
+    findPermissions 
+    |> Enum.to_list()  
+    |> Poison.encode!
+    |> (&send_resp(conn, 200, &1)).()
   end
 end
