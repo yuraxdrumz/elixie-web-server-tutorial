@@ -13,12 +13,11 @@ defmodule SimpleServer.AuthController do
   end
 
   def update_weather(conn) do
-    # %Weather{id: conn.path_params["id"]}
-    # |> Weather.update_changeset(%{city: "Tel-Aviv"})    
-    # |> IO.inspect
-    # |> Repo.update!
-    # # |> Repo.update!
-    # |> Poison.encode!
-    # |> (&send_resp(conn, 200, &1)).()
+    Weather
+    |> Repo.get!(conn.path_params["id"])
+    |> Weather.update_changeset(%{city: conn.body_params["city"]})    
+    |> Repo.update!
+    |> Poison.encode!
+    |> (&send_resp(conn, 200, &1)).()
   end
 end

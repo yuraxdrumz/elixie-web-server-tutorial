@@ -24,8 +24,8 @@ defmodule SimpleServer.Weather do
 
   def update_changeset(weather, params \\ %{}) do
     weather
-    |> cast(params, [:id])
-    |> validate_required([:id])
+    |> cast(params, [:id, :city])
+    |> validate_required([:id, :city])
   end
 
 end
