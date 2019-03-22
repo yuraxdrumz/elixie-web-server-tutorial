@@ -1,6 +1,6 @@
 defmodule SimpleServer.Repo do
   import SimpleServer.DB
-  def findPermissions do
+  def find_permissions do
     find("dynamiccaps", %{})
   end
 end
