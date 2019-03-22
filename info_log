@@ -1,2 +1,0 @@
-{"timestamp":"2019-03-22 18:22:35.936","message":"Setting Ranch options together with socket options is deprecated. Please use the new map syntax that allows specifying socket options separately from other options.\n","level":"warn"}
-{"timestamp":"2019-03-22 18:22:35.936","message":"Starting application...","level":"info"}

@@ -25,7 +25,7 @@ config :simple_server, SimpleServer.Repo,
   hostname: "localhost"
 
 config :logger,
-  backends: [{Loggix, :info_log}]
+  backends: [{Loggix, :info_log}, :console]
 config :logger, :info_log,
   path: "./info_log",
   level: :info,

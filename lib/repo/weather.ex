@@ -22,4 +22,10 @@ defmodule SimpleServer.Weather do
     |> validate_number(:prcp, less_than_or_equal_to: 100)
   end
 
+  def update_changeset(weather, params \\ %{}) do
+    weather
+    |> cast(params, [:id])
+    |> validate_required([:id])
+  end
+
 end

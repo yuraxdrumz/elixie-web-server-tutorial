@@ -11,4 +11,14 @@ defmodule SimpleServer.AuthController do
     |> Poison.encode!
     |> (&send_resp(conn, 200, &1)).()
   end
+
+  def update_weather(conn) do
+    # %Weather{id: conn.path_params["id"]}
+    # |> Weather.update_changeset(%{city: "Tel-Aviv"})    
+    # |> IO.inspect
+    # |> Repo.update!
+    # # |> Repo.update!
+    # |> Poison.encode!
+    # |> (&send_resp(conn, 200, &1)).()
+  end
 end
