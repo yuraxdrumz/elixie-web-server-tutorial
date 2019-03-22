@@ -14,14 +14,14 @@ defmodule SimpleServer.Router do
   plug(:fetch_query_params)
   plug(Plug.RequestId)
   plug(Plug.Parsers, parsers: [:urlencoded, :multipart, :json], json_decoder: Poison)
-  plug(Validator, [%{route: "/other/:s", qs: %{test: Integer}}])
+  # plug(Validator, [%{route: "/other/:s", qs: %{test: Integer}}])
   plug(:dispatch)
   
   get "/other/:s", do: handle_other(conn)
 
   post "/upload", do: handle_upload(conn)
   
-  forward "/user", to: SimpleServer.AuthRouter
+  forward "/weather", to: SimpleServer.AuthRouter
 
   def handle_errors(conn, %{kind: kind, reason: reason, stack: _stack}) do
     send_resp(conn, conn.status, Poison.encode!(%{kind: kind, reason: reason}))

@@ -17,6 +17,12 @@ config :simple_server,
 
 config :joken, default_signer: "56651dd8d2142f56a44a334f2180ec01d671d82f6b61e2b553d22381f6f017d9"
 
+config :simple_server, SimpleServer.Repo,
+  adapter: Mongo.Ecto,
+  database: "ecto_test",
+  # username: "mongodb",
+  # password: "mongodb",
+  hostname: "localhost"
 
 config :logger,
   backends: [{Loggix, :info_log}]

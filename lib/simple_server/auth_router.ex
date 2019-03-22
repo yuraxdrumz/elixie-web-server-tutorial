@@ -9,7 +9,7 @@ defmodule SimpleServer.AuthRouter do
   plug :match
   plug :dispatch
 
-  get "/:user_id", do: handle_user_id(conn)
+  get "/", do: add_weather(conn)
 
   def handle_errors(conn, %{kind: kind, reason: reason, stack: _stack}) do
     send_resp(conn, conn.status, Poison.encode!(%{kind: kind, reason: reason}))
