@@ -6,7 +6,7 @@ defmodule SimpleServer.AuthController do
 
   def add_weather(conn) do
     %Weather{}
-    |> Weather.new_changeset(%{city: "Netanya", temp_lo: 10, temp_hi: 60, prcp: 70})
+    |> Weather.new_changeset(%{city: conn.body_params["city"], temp_lo: conn.body_params["temp_lo"], temp_hi: conn.body_params["temp_hi"], prcp: conn.body_params["prcp"]})
     |> Repo.insert!
     |> Poison.encode!
     |> (&send_resp(conn, 200, &1)).()

@@ -9,7 +9,7 @@ defmodule SimpleServer.AuthRouter do
   plug :match
   plug :dispatch
 
-  get "/", do: add_weather(conn)
+  post "/", do: add_weather(conn)
 
   put "/:id", do: update_weather(conn)
 
