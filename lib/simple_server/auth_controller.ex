@@ -5,11 +5,9 @@ defmodule SimpleServer.AuthController do
   import Plug.Conn
 
   def add_weather(conn) do
-    %Weather{city: "Netanya", temp_lo: 10, temp_hi: 30, prcp: 70.5}
-    |> Ecto.Changeset.change(%{})
+    Weather.new_changeset(%Weather{}, %{city: "Netanya", temp_lo: 10, temp_hi: 60, prcp: 70})
     |> Repo.insert!()
     |> Poison.encode!
-    |> IO.inspect
     |> (&send_resp(conn, 200, &1)).()
   end
 end

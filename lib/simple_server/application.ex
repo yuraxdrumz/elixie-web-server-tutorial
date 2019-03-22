@@ -4,7 +4,7 @@ defmodule SimpleServer.Application do
   @moduledoc false
   use Application
   import Plug.Adapters.Cowboy
-  import Logger
+  require Logger
   import Supervisor.Spec
   alias SimpleServer.Repo
 
@@ -20,7 +20,7 @@ defmodule SimpleServer.Application do
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: SimpleServer.Supervisor]
-    info("Starting application...")
+    Logger.info("Starting application...")
     # connect()
     Supervisor.start_link(children, opts)
   end

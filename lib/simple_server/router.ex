@@ -24,7 +24,7 @@ defmodule SimpleServer.Router do
   forward "/weather", to: SimpleServer.AuthRouter
 
   def handle_errors(conn, %{kind: kind, reason: reason, stack: _stack}) do
-    send_resp(conn, conn.status, Poison.encode!(%{kind: kind, reason: reason}))
+    send_resp(conn, conn.status, reason)
   end
   
   match _ do
