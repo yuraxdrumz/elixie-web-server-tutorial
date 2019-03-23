@@ -3,11 +3,20 @@ defmodule SimpleServer.AuthController do
   alias SimpleServer.Repo
   alias SimpleServer.Weather
   import Plug.Conn
+  import Ecto.Query
 
   
   def get_weather(conn) do
     Weather
     |> Repo.get!(conn.path_params["id"])
+    |> Poison.encode!
+    |> (&send_resp(conn, 200, &1)).()
+  end
+
+
+  def get_prcp(conn) do
+    query = from w in Weather, where: w.prcp > ^conn.path_params["min"], select: %{city: w.city, id: w.id}
+    Repo.all(query)
     |> Poison.encode!
     |> (&send_resp(conn, 200, &1)).()
   end

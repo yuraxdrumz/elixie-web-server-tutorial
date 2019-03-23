@@ -15,6 +15,8 @@ defmodule SimpleServer.AuthRouter do
 
   put "/:id", do: update_weather(conn)
 
+  get "/prcp/:min", do: get_prcp(conn)
+
   delete "/:id", do: delete_weather(conn)
 
   def handle_errors(conn, %{kind: kind, reason: reason, stack: _stack} = err) do

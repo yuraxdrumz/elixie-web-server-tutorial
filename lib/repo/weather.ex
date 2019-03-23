@@ -1,7 +1,7 @@
 defmodule SimpleServer.Weather do
   use Ecto.Schema
   import Ecto.Changeset
-
+  
   @primary_key {:id, :binary_id, autogenerate: true}
   @derive {Poison.Encoder, except: [:__meta__]}
 
@@ -28,10 +28,4 @@ defmodule SimpleServer.Weather do
     |> validate_inclusion(:temp_lo, -60..60)
     |> validate_inclusion(:temp_hi, -60..60)
   end
-
-  def get_changeset(weather, params \\ %{}) do
-    weather
-    |> cast(params, [:id])
-  end
-
 end
