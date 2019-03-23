@@ -9,7 +9,7 @@ defmodule SimpleServer.Weather do
     field :city, :string
     field :temp_lo, :integer
     field :temp_hi, :integer
-    field :prcp, :float, default: 0.0
+    field :prcp, :float
     timestamps
   end
 
@@ -24,8 +24,9 @@ defmodule SimpleServer.Weather do
 
   def update_changeset(weather, params \\ %{}) do
     weather
-    |> cast(params, [:id, :city])
-    |> validate_required([:id, :city])
+    |> cast(params, [:city, :temp_lo, :temp_hi, :prcp])
+    |> validate_inclusion(:temp_lo, -60..60)
+    |> validate_inclusion(:temp_hi, -60..60)
   end
 
 end

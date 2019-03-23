@@ -13,9 +13,8 @@ defmodule SimpleServer.AuthController do
   end
 
   def update_weather(conn) do
-    Weather
-    |> Repo.get!(conn.path_params["id"])
-    |> Weather.update_changeset(%{city: conn.body_params["city"]})    
+    %Weather{id: conn.path_params["id"]}
+    |> Weather.update_changeset(%{city: conn.body_params["city"], temp_lo: conn.body_params["temp_lo"], temp_hi: conn.body_params["temp_hi"], prcp: conn.body_params["prcp"]})   
     |> Repo.update!
     |> Poison.encode!
     |> (&send_resp(conn, 200, &1)).()

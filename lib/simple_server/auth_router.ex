@@ -14,7 +14,7 @@ defmodule SimpleServer.AuthRouter do
   put "/:id", do: update_weather(conn)
 
   def handle_errors(conn, %{kind: kind, reason: reason, stack: _stack} = err) do
-    # IO.inspect err
+    IO.inspect err
     send_resp(conn, conn.status, reason)
   end
 
