@@ -29,7 +29,7 @@ config :logger,
   
 config :logger, :info_log,
   path: "./info_log",
-  level: :info,
+  level: :debug,
   encoder: {Poison, :encode!},
   metadata: [:request_id],
   rotate: %{max_bytes: 1024 * 1024 * 100, keep: 10}
