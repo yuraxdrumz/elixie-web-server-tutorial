@@ -20,13 +20,10 @@ defmodule SimpleServer.AuthRouter do
   delete "/:id", do: delete_weather(conn)
 
   def handle_errors(conn, %{kind: kind, reason: reason, stack: _stack} = err) do
-    try do
-      IO.inspect err.reason.changeset.errors
-      send_resp(conn, conn.status, Poison.encode!(err.reason.changeset.errors))
-    rescue
-      e in ArgumentError -> IO.inspect e.message
-    after
-      send_resp(conn, conn.status, "Something went wrong")
+    case Poison.encode(reason) do
+      {:ok, json} -> send_resp(conn, conn.status, json)
+      {:error, json_failed} -> send_resp(conn, conn.status, "Something went wrong")
+      _ -> send_resp(conn, conn.status, "Something went wrong")
     end
   end
 
