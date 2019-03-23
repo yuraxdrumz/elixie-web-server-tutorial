@@ -29,4 +29,9 @@ defmodule SimpleServer.Weather do
     |> validate_inclusion(:temp_hi, -60..60)
   end
 
+  def get_changeset(weather, params \\ %{}) do
+    weather
+    |> cast(params, [:id])
+  end
+
 end
