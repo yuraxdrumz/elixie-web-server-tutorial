@@ -15,7 +15,7 @@ defmodule SimpleServer.MixProject do
   def application do
     [
       extra_applications: [:logger, :cowboy, :plug, :poison, :mongodb, :remix, :mongodb_ecto, :ecto],
-      mod: {SimpleServer.Application, []}
+      mod: {SimpleServer, []}
     ]
   end
 
