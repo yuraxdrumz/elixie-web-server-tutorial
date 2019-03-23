@@ -3,8 +3,8 @@ defmodule SimpleServer.AuthRouter do
   use Plug.ErrorHandler
   import SimpleServer.AuthController
 
-  # alias SimpleServer.Authentication
-  # plug(Authentication)
+  alias SimpleServer.Authentication
+  plug(Authentication)
   
   plug :match
   plug :dispatch

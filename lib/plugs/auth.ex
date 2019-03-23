@@ -6,7 +6,7 @@ defmodule SimpleServer.Authentication do
     opts
   end
 
-  defp check_auth(conn, token) do 
+  defp authenticate({conn, token}) do
     jwt = String.slice(token, 7, String.length(token))
     case verify_and_validate(jwt) do
       {:ok, claims} -> %{conn | assigns: Map.merge(conn.assigns, claims)}
@@ -22,11 +22,20 @@ defmodule SimpleServer.Authentication do
     |> halt
   end
 
+  defp authenticate({conn}) do
+    send_custom_resp(conn)
+  end
+
+  defp get_auth_header(conn) do
+    case get_req_header(conn, "authorization") do
+      [token] -> {conn, token}
+      _ -> {conn}
+    end
+  end
 
   def call(%Plug.Conn{request_path: _path} = conn,_opts) do
-    case get_req_header(conn, "authorization") do
-      [auth_str] -> check_auth(conn, auth_str)
-      _ -> send_custom_resp(conn)
-    end
+    conn
+    |> get_auth_header
+    |> authenticate
   end
 end
